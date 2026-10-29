@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Registration Successful | CampusLoop{% endblock %}
+
+{% block content %}
+<section class="success-card">
+  <div class="success-icon">✓</div>
+  <span class="eyebrow">REGISTRATION RECEIVED</span>
+  <h1>You're on the list, {{ name }}!</h1>
+  <p>
+    Thank you for registering for
+    <strong>Build Your First AI Project in 60 Minutes</strong>.
+  </p>
+  <p class="muted">
+    The organizer can share the workshop joining details separately.
+  </p>
+  <a href="{{ url_for('index') }}" class="button primary">
+    Back to home
+  </a>
+</section>
+{% endblock %}

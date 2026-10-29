@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login | CampusLoop{% endblock %}
+
+{% block content %}
+<section class="login-card">
+  <span class="eyebrow">ORGANIZER AREA</span>
+  <h1>Admin login</h1>
+  <p class="muted">View registrations and referral performance.</p>
+
+  <form method="POST">
+    <label for="password">Admin password</label>
+    <input id="password" name="password"
+           type="password" required autofocus>
+    <button class="button primary full" type="submit">
+      Sign in
+    </button>
+  </form>
+
+  <p class="privacy-note">
+    Default demo password: admin123
+  </p>
+</section>
+{% endblock %}

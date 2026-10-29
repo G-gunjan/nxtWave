@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Growth Dashboard | CampusLoop{% endblock %}
+
+{% block content %}
+<div class="dashboard-heading">
+  <div>
+    <span class="eyebrow">GROWTH DASHBOARD</span>
+    <h1>Registration overview</h1>
+    <p class="muted">Your target: 500 engineering students</p>
+  </div>
+  <div class="actions">
+    <a class="button secondary" href="/admin/export.csv">Export CSV ↓</a>
+    <a class="button outline" href="/admin/logout">Log out</a>
+  </div>
+</div>
+
+<section class="stats-grid">
+  <div class="stat-card">
+    <span>Total registrations</span>
+    <strong>{{ total }}</strong>
+  </div>
+  <div class="stat-card">
+    <span>Target</span>
+    <strong>{{ target }}</strong>
+  </div>
+  <div class="stat-card">
+    <span>Remaining</span>
+    <strong>{{ remaining }}</strong>
+  </div>
+  <div class="stat-card">
+    <span>Progress</span>
+    <strong>{{ progress }}%</strong>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Progress toward 500</h2>
+      <p class="muted">{{ total }} registrations collected</p>
+    </div>
+    <strong>{{ progress }}%</strong>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" style="width: {{ progress }}%"></div>
+  </div>
+</section>
+
+<section class="charts-grid">
+  <div class="panel">
+    <h2>Registrations by source</h2>
+    <p class="muted">Which channels are working?</p>
+    <div class="chart-box">
+      <canvas id="sourceChart"></canvas>
+    </div>
+    <script id="source-data" type="application/json">
+      {{ source_counts | tojson }}
+    </script>
+  </div>
+
+  <div class="panel">
+    <h2>Referral performance</h2>
+    <p class="muted">Registrations by referral code</p>
+    <div class="chart-box">
+      <canvas id="referralChart"></canvas>
+    </div>
+    <script id="referral-data" type="application/json">
+      {{ referral_counts | tojson }}
+    </script>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>How to share tracking links</h2>
+  <p class="muted">
+    Add a source and optional referral code to your public registration link.
+  </p>
+  <div class="tracking-examples">
+    <p><strong>WhatsApp:</strong> <code>/?source=whatsapp</code></p>
+    <p><strong>College club:</strong> <code>/?source=club</code></p>
+    <p><strong>Referral:</strong> <code>/?source=referral&ref=GUNJAN</code></p>
+    <p><strong>Email:</strong> <code>/?source=email</code></p>
+  </div>
+  <p class="privacy-note">
+    Replace the domain with your actual hosted app URL when deploying.
+  </p>
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+    <div>
+      <h2>Recent registrations</h2>
+      <p class="muted">Latest 25 registrations</p>
+    </div>
+  </div>
+
+  {% if registrations %}
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>College</th>
+            <th>Year</th>
+            <th>Interest</th>
+            <th>Source</th>
+            <th>Referral</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in registrations %}
+            <tr>
+              <td>{{ r.name }}</td>
+              <td>{{ r.email }}</td>
+              <td>{{ r.college }}</td>
+              <td>{{ r.graduation_year }}</td>
+              <td>{{ r.interest }}</td>
+              <td>{{ r.source }}</td>
+              <td>{{ r.referral_code or "—" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="empty-state">
+      No registrations yet. Share your registration page to get started.
+    </p>
+  {% endif %}
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

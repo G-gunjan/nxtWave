@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Register | CampusLoop{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-content">
+    <span class="eyebrow">FREE ONLINE WORKSHOP</span>
+    <h1>Build Your First <span>AI Project</span> in 60 Minutes</h1>
+    <p class="lead">
+      A beginner-friendly session for engineering students.
+      Learn how to turn an idea into a project you can keep building.
+    </p>
+    <div class="benefits">
+      <p>✓ Practical project walkthrough</p>
+      <p>✓ Beginner-friendly learning</p>
+      <p>✓ Online and free to attend</p>
+    </div>
+    <p class="muted">
+      For engineering students · Registration takes about a minute
+    </p>
+  </div>
+
+  <div class="form-card">
+    <span class="eyebrow">SAVE YOUR SPOT</span>
+    <h2>Register for free</h2>
+    <p class="muted">Fill in your details below.</p>
+
+    <form action="{{ url_for('register') }}" method="POST"
+          id="registration-form">
+      <input type="hidden" name="source" value="{{ source }}">
+      <input type="hidden" name="referral_code"
+             value="{{ referral_code }}">
+
+      <label for="name">Full name</label>
+      <input id="name" name="name" type="text"
+             maxlength="80" required placeholder="Your full name">
+
+      <label for="email">Email address</label>
+      <input id="email" name="email" type="email"
+             maxlength="160" required placeholder="you@example.com">
+
+      <label for="college">College / university</label>
+      <input id="college" name="college" type="text"
+             maxlength="120" required placeholder="Your college name">
+
+      <div class="form-row">
+        <div>
+          <label for="graduation_year">Graduation year</label>
+          <select id="graduation_year" name="graduation_year" required>
+            <option value="">Select year</option>
+            {% for year in range(2026, 2033) %}
+              <option value="{{ year }}"
+                {% if year == 2027 %}selected{% endif %}>
+                {{ year }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div>
+          <label for="interest">Main interest</label>
+          <select id="interest" name="interest" required>
+            <option>AI/ML</option>
+            <option>Software Development</option>
+            <option>Data Analytics</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="button primary full" type="submit">
+        Register for the workshop →
+      </button>
+      <p class="privacy-note">
+        Your details will be used to manage workshop registrations.
+      </p>
+    </form>
+  </div>
+</section>
+
+<section class="info-strip">
+  <div><strong>60 minutes</strong><span>Practical session</span></div>
+  <div><strong>₹0</strong><span>Free registration</span></div>
+  <div><strong>One project</strong><span>Start building</span></div>
+</section>
+{% endblock %}
